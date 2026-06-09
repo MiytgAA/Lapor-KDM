@@ -38,7 +38,12 @@ router.post('/', verifyToken, (req, res, next) => {
 }, validate(createLaporanSchema), createLaporan);
 
 // PUT  /api/laporan/:id     — perlu login (owner only)
-router.put('/:id', verifyToken, validate(updateLaporanSchema), updateLaporan);
+router.put('/:id', verifyToken, (req, res, next) => {
+  uploadMultiple(req, res, (err) => {
+    if (err) return next(err);
+    next();
+  });
+}, validate(updateLaporanSchema), updateLaporan);
 
 // DELETE /api/laporan/:id   — perlu login (owner atau admin)
 router.delete('/:id', verifyToken, deleteLaporan);

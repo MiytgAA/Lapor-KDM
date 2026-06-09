@@ -91,7 +91,7 @@ export default function HomeScreen() {
         <View style={styles.greetingRow}>
           <View>
             <Text style={styles.greetingText}>{greeting()},</Text>
-            <Text style={styles.userName}>{user?.nama || 'Pengguna'} 👋</Text>
+            <Text style={styles.userName}>{user?.nama || 'Pengguna'}</Text>
           </View>
           <View style={styles.avatarCircle}>
             <Text style={styles.avatarText}>{getInitials(user?.nama || '?')}</Text>
@@ -100,7 +100,7 @@ export default function HomeScreen() {
 
         {/* Search */}
         <View style={styles.searchBox}>
-          <Text style={styles.searchIcon}>🔍</Text>
+          <Text style={styles.searchIcon}></Text>
           <TextInput
             style={styles.searchInput}
             placeholder="Cari laporan..."

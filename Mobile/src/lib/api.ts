@@ -85,8 +85,10 @@ export const laporanApi = {
     api.post<ApiResponse<Laporan>>('/laporan', data, {
       headers: { 'Content-Type': 'multipart/form-data' },
     }),
-  update: (id: number, data: Partial<Laporan>) =>
-    api.put<ApiResponse<Laporan>>(`/laporan/${id}`, data),
+  update: (id: number, data: FormData | Partial<Laporan>) =>
+    api.put<ApiResponse<Laporan>>(`/laporan/${id}`, data, {
+      headers: data instanceof FormData ? { 'Content-Type': 'multipart/form-data' } : undefined,
+    }),
   delete: (id: number) =>
     api.delete<ApiResponse<null>>(`/laporan/${id}`),
   updateStatus: (id: number, status: string) =>

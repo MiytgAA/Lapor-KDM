@@ -57,7 +57,7 @@ export default function DashboardPage() {
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 32, flexWrap: 'wrap', gap: 16 }}>
         <div>
           <p className="eyebrow" style={{ marginBottom: 6 }}>Dashboard</p>
-          <h1 className="display-md">Selamat datang, {user?.nama?.split(' ')[0]} 👋</h1>
+          <h1 className="display-md">Selamat datang, {user?.nama?.split(' ')[0]} </h1>
           <p className="body-sm" style={{ marginTop: 6 }}>Pantau dan kelola laporan Anda di sini.</p>
         </div>
         <Link href="/laporan/tambah" className="btn btn-primary">

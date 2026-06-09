@@ -228,13 +228,13 @@ export default function DetailLaporanScreen() {
                 style={[styles.adminBtn, styles.editBtnNew]} 
                 onPress={() => router.push(`/laporan/edit/${laporan.id}` as any)}
               >
-                <Text style={styles.editBtnTxtNew}>✏️ Edit</Text>
+                <Text style={styles.editBtnTxtNew}>Edit</Text>
               </TouchableOpacity>
               <TouchableOpacity 
                 style={[styles.adminBtn, styles.deleteBtn]} 
                 onPress={handleDelete}
               >
-                <Text style={styles.deleteBtnTxt}>🗑️ Hapus</Text>
+                <Text style={styles.deleteBtnTxt}>Hapus</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -245,11 +245,17 @@ export default function DetailLaporanScreen() {
           <View style={styles.galleryCard}>
             <Text style={styles.sectionTitle}>📷 Lampiran Foto ({laporan.gambar.length})</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.gallery}>
-              {laporan.gambar.map((g, i) => (
-                <TouchableOpacity key={g.id} onPress={() => setLightbox(g.url)} activeOpacity={0.85}>
-                  <Image source={{ uri: g.url }} style={styles.galleryImg} />
+              {laporan.gambar.map(g => {
+              let uri = g.url;
+              if (Platform.OS === 'android' && uri.includes('localhost')) {
+                uri = uri.replace('localhost', '10.0.2.2');
+              }
+              return (
+                <TouchableOpacity key={g.id} onPress={() => setLightbox(uri)} activeOpacity={0.85}>
+                  <Image source={{ uri }} style={styles.galleryImg} />
                 </TouchableOpacity>
-              ))}
+              );
+            })}
             </ScrollView>
           </View>
         )}

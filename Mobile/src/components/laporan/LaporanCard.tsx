@@ -1,6 +1,6 @@
 // src/components/laporan/LaporanCard.tsx
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Platform } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Colors } from '@/lib/colors';
 import { truncate, formatDate } from '@/lib/utils';
@@ -9,7 +9,10 @@ import type { Laporan } from '@/lib/types';
 
 export function LaporanCard({ laporan }: { laporan: Laporan }) {
   const router = useRouter();
-  const thumbnail = laporan.gambar?.[0]?.url;
+  let thumbnail = laporan.gambar?.[0]?.url;
+  if (thumbnail && Platform.OS === 'android' && thumbnail.includes('localhost')) {
+    thumbnail = thumbnail.replace('localhost', '10.0.2.2');
+  }
 
   return (
     <TouchableOpacity

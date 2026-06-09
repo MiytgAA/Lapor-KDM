@@ -141,6 +141,20 @@ const updateLaporan = async (req, res, next) => {
 
     await laporan.update({ judul, deskripsi, kategori_id });
 
+    // Update gambar jika ada replace_gambar
+    if (req.body.replace_gambar === 'true') {
+      await Gambar.destroy({ where: { laporan_id: laporan.id } });
+      if (req.files && req.files.length > 0) {
+        const gambarData = req.files.map((file) => ({
+          laporan_id: laporan.id,
+          url: buildFileUrl(req, file.filename),
+          filename: file.filename,
+          size_bytes: file.size,
+        }));
+        await Gambar.bulkCreate(gambarData);
+      }
+    }
+
     const result = await Laporan.findByPk(laporan.id, {
       include: [
         { model: Kategori, as: 'kategori', attributes: ['id', 'nama', 'warna'] },

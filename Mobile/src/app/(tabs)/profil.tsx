@@ -19,7 +19,7 @@ export default function ProfilScreen() {
     if (!user) return;
     const fetch = async () => {
       try {
-        const { data } = await laporanApi.getAll({ user_id: user.id, limit: 100 });
+        const { data } = await laporanApi.getAll({ user_id: user.id, limit: 50 });
         const list: Laporan[] = data.data || [];
         setStats({
           total: data.pagination?.total || list.length,
@@ -125,11 +125,6 @@ export default function ProfilScreen() {
           <Text style={styles.infoVal}>1.0.0</Text>
         </View>
         <View style={styles.divider} />
-        <View style={styles.infoRow}>
-          <Text style={styles.infoIcon}>🌐</Text>
-          <Text style={styles.infoKey}>Platform</Text>
-          <Text style={styles.infoVal}>React Native · Expo</Text>
-        </View>
       </View>
 
       {/* Logout */}

@@ -45,6 +45,16 @@ function RootNavigator() {
             headerShadowVisible: false,
           }}
         />
+        <Stack.Screen
+          name="laporan/edit/[id]"
+          options={{
+            headerShown: true,
+            headerTitle: 'Edit Laporan',
+            headerBackTitle: 'Batal',
+            headerStyle: { backgroundColor: '#fff' },
+            headerShadowVisible: false,
+          }}
+        />
       </Stack>
 
       {/* Custom splash overlay — shown until splashDone */}

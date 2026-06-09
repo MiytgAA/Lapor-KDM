@@ -8,6 +8,7 @@ import type { DashboardStats, Laporan } from '@/lib/types';
 import { formatDateShort, truncate } from '@/lib/utils';
 import toast from 'react-hot-toast';
 import { FileText, Users, CheckCircle, XCircle, Clock, TrendingUp } from 'lucide-react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 export default function AdminPage() {
   const { user } = useAuth();
@@ -76,24 +77,38 @@ export default function AdminPage() {
 
       <div style={{ display:'grid', gridTemplateColumns:'1fr 340px', gap:20, marginBottom:28 }}>
         {/* Trend Chart */}
-        <div className="card" style={{ padding:'24px 28px' }}>
+        <div className="card" style={{ padding:'24px 28px', display: 'flex', flexDirection: 'column' }}>
           <h2 className="display-xs" style={{ marginBottom:4 }}>Tren 7 Hari Terakhir</h2>
           <p className="body-sm" style={{ marginBottom:20 }}>Laporan masuk per hari</p>
           {trend_7_hari.length === 0 ? (
             <div style={{ textAlign:'center', padding:'32px 0', color:'var(--mute)', fontSize:14 }}>Belum ada data tren</div>
           ) : (
-            <div style={{ display:'flex', alignItems:'flex-end', gap:10, height:160, paddingBottom:8 }}>
-              {trend_7_hari.map((t, i) => {
-                const h = (Number(t.total) / maxTrend) * 140;
-                return (
-                  <div key={i} style={{ flex:1, display:'flex', flexDirection:'column', alignItems:'center', gap:6 }}>
-                    <div title={`${t.total} laporan`} style={{ width:'100%', height:h, background:'var(--primary)', borderRadius:'3px 3px 0 0', transition:'height .3s ease', minHeight:4 }} />
-                    <p style={{ fontSize:10, color:'var(--mute)', textAlign:'center' }}>
-                      {new Date(t.tanggal).toLocaleDateString('id-ID', { day:'numeric', month:'short' })}
-                    </p>
-                  </div>
-                );
-              })}
+            <div style={{ height: 200, width: '100%', marginTop: 'auto' }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={trend_7_hari.map(t => ({ ...t, total: Number(t.total) }))} margin={{ top: 10, right: 0, left: -20, bottom: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e0e0e0" />
+                  <XAxis 
+                    dataKey="tanggal" 
+                    axisLine={false} 
+                    tickLine={false} 
+                    tickFormatter={(val) => new Date(val).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}
+                    style={{ fontSize: 11, fill: 'var(--mute)' }} 
+                    dy={10}
+                  />
+                  <YAxis 
+                    allowDecimals={false} 
+                    axisLine={false} 
+                    tickLine={false} 
+                    style={{ fontSize: 11, fill: 'var(--mute)' }} 
+                  />
+                  <Tooltip 
+                    cursor={{ fill: '#f5f5f5' }}
+                    contentStyle={{ borderRadius: 8, border: '1px solid var(--hairline)', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}
+                    labelFormatter={(val) => new Date(val).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+                  />
+                  <Bar dataKey="total" fill="var(--primary)" radius={[4, 4, 0, 0]} maxBarSize={40} />
+                </BarChart>
+              </ResponsiveContainer>
             </div>
           )}
         </div>
