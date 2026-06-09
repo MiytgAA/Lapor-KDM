@@ -71,7 +71,7 @@ export default function LandingPage() {
         <section style={{ padding: '40px 5%', borderTop: '1px solid var(--hairline)', borderBottom: '1px solid var(--hairline)', background: '#fafafa' }}>
           <div style={{ maxWidth: 1000, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 24, textAlign: 'center' }}>
             <div style={{ borderRight: '1px solid var(--hairline)' }}>
-              <h2 className="display-lg" style={{ color: 'var(--accent-info)' }}>12K+</h2>
+              <h2 className="display-lg" style={{ color: 'var(--accent-info)' }}>1K</h2>
               <p className="body-sm" style={{ marginTop: 8 }}>Total Pengaduan</p>
             </div>
             <div style={{ borderRight: '1px solid var(--hairline)' }}>
